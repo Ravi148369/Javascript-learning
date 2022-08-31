@@ -1,0 +1,44 @@
+.align{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.align input{
+    height: 40px;
+    width: 300px;
+    border-radius: 5px;
+    border: none;
+    outline: 1px solid black;
+    padding-left: 15px;
+}
+.addtask-btn{
+    margin-left: 12px;
+    border-radius: 5px;
+    border: none;
+    width: 100px;
+    padding: 14px 18px;
+    background-color: rgb(0, 191, 0);
+    color: #fff;
+}
+#div{
+    margin-top: 10px;
+    width: 432px;   
+}
+.taskdiv{
+    /* border: 1px solid  black; */
+    background-color: rgba(128, 128, 128, 0.492);
+    margin: 8px 0px;
+    display: flex;
+    padding: 4px 8px;
+    border-radius: 5px;
+    color: black;
+    font-size: 1.1em;
+    justify-content: space-between;
+    align-items: center;
+}
+.taskdiv button{
+    border: none;
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+}
