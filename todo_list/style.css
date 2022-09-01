@@ -66,3 +66,16 @@ li{
 .space-evenly span{
     color: rgb(58, 58, 58);
 }
+.priority-btn{
+    /* border: 1px solid black; */
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+}
+.priority-btn button{
+    background-color: #28a745;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+}
