@@ -12,6 +12,7 @@ let tasks = {
       this.task.description = task.description;
       this.task.id = this.items.length + 1;
       this.task.priority = task.priority;
+      task=Object.assign(task,this.task)
       this.items.push(task);
       this.render(this.task);
       return;
@@ -24,8 +25,11 @@ let tasks = {
       const button = document.createElement("button");
       const p = document.createElement("p");
       p.innerText = task.description;
+      if(task.is_deleted){
+        p.style.textDecoration='line-through'
+      }
       button.innerText = "delete";
-      button.onclick = () => this.remove(task.id, p);
+      button.onclick = () =>this.remove(task.id, p);
       li.appendChild(p);
       li.appendChild(button);
       this.element.append(li);
@@ -39,7 +43,6 @@ let tasks = {
   remove: function (taskId, p) {
     this.items[taskId - 1].is_deleted = true;
     p.style.textDecoration = "line-through";
-    this.render(this.items);
   },
   ascSort: function () {
     for (let i = 0; i < this.items.length - 1; i++) {
