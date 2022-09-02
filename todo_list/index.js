@@ -6,12 +6,14 @@ let tasks = {
     id: 1,
     is_deleted: false,
     priority: 2,
+    sortOrder:null
   },
   add: function (task) {
     if (task.description !== "") {
       this.task.description = task.description;
       this.task.id = this.items.length + 1;
       this.task.priority = task.priority;
+      this.task.sortOrder=this.items.length+1
       task=Object.assign(task,this.task)
       this.items.push(task);
       this.render(this.task);
@@ -20,24 +22,45 @@ let tasks = {
     alert("please enter task");
   },
   render: function (task) {
-    if (!Array.isArray(task)) {
-      const li = document.createElement("li");
-      const button = document.createElement("button");
-      const p = document.createElement("p");
-      p.innerText = task.description;
-      if(task.is_deleted){
-        p.style.textDecoration='line-through'
+    for(let i=0;i<this.items.length-1;i++){
+      if(this.items[i].sortOrder>this.items[i+1].sortOrder){
+        let temp=this.items[i+1]
+        this.items[i+1]=this.items[i]
+        this.items[i]=temp
+        i=-1
       }
-      button.innerText = "delete";
-      button.onclick = () =>this.remove(task.id, p);
-      li.appendChild(p);
-      li.appendChild(button);
-      this.element.append(li);
-      return;
     }
     this.element.innerHTML = "";
-    task.map((value) => {
-      this.render(value);
+    this.items.map((value) => {
+      const li = document.createElement("li");
+      const btn_div=document.createElement('div')
+      const button = document.createElement("button");
+      const up_button=document.createElement('button')
+      const down_button=document.createElement('button')
+      const p = document.createElement("p");
+
+      up_button.textContent="Up"
+      down_button.textContent="Down"
+      button.textContent = "delete";
+
+      up_button.onclick=()=>this.move(value.sortOrder,"up")
+      down_button.onclick=()=>this.move(value.sortOrder,"down")
+      button.onclick = () =>this.remove(value.id, p);
+      
+      btn_div.append(up_button,down_button,button)
+      p.innerText = value.description;
+      if(value.is_deleted){
+        p.style.textDecoration='line-through'
+      }
+      if(value.sortOrder==1){
+        up_button.style.display='none'
+      }
+      if(value.sortOrder==this.items.length){
+        down_button.style.display='none'
+      }
+      li.appendChild(p);
+      li.appendChild(btn_div);
+      this.element.append(li);
     });
   },
   remove: function (taskId, p) {
@@ -66,4 +89,16 @@ let tasks = {
     }
     this.render(this.items);
   },
+  move: function(sortOrder,move){
+    if(move=='up'){
+      this.items[sortOrder-1].sortOrder=sortOrder-1;
+      this.items[sortOrder-2].sortOrder=sortOrder;
+      this.render(this.items)
+      return;
+    }
+
+    this.items[sortOrder-1].sortOrder=sortOrder+1
+    this.items[sortOrder].sortOrder=sortOrder
+    this.render(this.items)
+  }
 };
