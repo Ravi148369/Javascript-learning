@@ -7,30 +7,7 @@ h1{
     text-align: center;
     /* text-decoration: dashed; */
 }
-.list-div{
-    width: 700px;
-    align-self: center;
-    margin-right: 40px;
-    margin-top: 16px;
-    /* border: 1px solid black; */
-}
 
-.task-list{
-    border: 1px solid black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    border-radius: 8px;
-}
-.task-list button{
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    background-color:#dc3545;
-    color: #fff;
-    margin-right: 8px;
-}
 .input-field{
     display: flex;
     flex-direction: column;
@@ -39,12 +16,6 @@ textarea{
     font-size: 1.3em;
     border-radius: 5px;
     /* border: none; */
-}
-ul:first-child li{
-    margin-top: 10px;
-}
-.task-div{
-    border: 1px solid black;
 }
 .align-content{
     display: flex;
@@ -62,6 +33,7 @@ ul:first-child li{
 }
 .space-evenly{
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 .space-evenly span{
@@ -79,4 +51,26 @@ ul:first-child li{
     border-radius: 5px;
     border: none;
     color: #fff;
+}
+
+
+/* dynamic rendering CSS */
+ul{
+    margin: 0;
+}
+.task-list{
+    margin-top: 8px;
+    border-radius: 15px;
+    width: 650px;
+    padding: 8px;
+    border: 1px solid black;
+}
+.task-list button{
+    padding:8px 12px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 4px;
+    margin-left: 8px;
+    color: #fff;
+    background-color:#dc3545;
 }

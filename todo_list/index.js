@@ -32,7 +32,7 @@ let tasks = {
     alert("please enter task");
   },
 
-  render: function (task) {
+  render: function () {
     for(let i=0;i<this.items.length-1;i++){
       if(this.items[i].sortOrder>this.items[i+1].sortOrder){
         let temp=this.items[i+1]
@@ -43,20 +43,22 @@ let tasks = {
     }
     this.element.innerHTML = "";
     this.items.map((value) => {
-      const li = document.createElement("li");
+      const div=document.createElement('div')
+      const li = document.createElement("div");
       const btn_div=document.createElement('div')
       const button = document.createElement("button");
       const up_button=document.createElement('button')
       const down_button=document.createElement('button')
       const p = document.createElement("p");
       const addSub=document.createElement('button')
-      li.className="task-list"
+      li.className="space-evenly"
+      div.className="task-list"
       addSub.onclick=()=>{
         btn_div.style.display='none'
         const subtext=document.createElement('textarea')
         const subButton=document.createElement('button')
         subButton.onclick=()=>{
-          this.add({subtask:subtext.value,index:value.id})
+          this.add({subtask:subtext.value,index:value.sortOrder})
           btn_div.style.display='block'
         }
         subButton.textContent="Add subTask"
@@ -83,6 +85,8 @@ let tasks = {
         down_button.style.display='none'
       }
       li.appendChild(p);
+      li.appendChild(btn_div);
+      div.append(li)
       if(value.subtask.length!==0){
         const ul=document.createElement('ul')
         value.subtask.map(value=>{
@@ -90,10 +94,9 @@ let tasks = {
           li.innerText=value
           ul.append(li)
         })
-        li.append(ul)
+        div.append(ul)
       }
-      li.appendChild(btn_div);
-      this.element.append(li);
+      this.element.append(div);
     });
   },
   remove: function (taskId, p) {
@@ -126,13 +129,13 @@ let tasks = {
     if(move=='up'){
       this.items[sortOrder-1].sortOrder=sortOrder-1;
       this.items[sortOrder-2].sortOrder=sortOrder;
-      this.render(this.items)
+      this.render()
       return;
     }
 
     this.items[sortOrder-1].sortOrder=sortOrder+1
     this.items[sortOrder].sortOrder=sortOrder
     
-    this.render(this.items)
+    this.render()
   }
 };
