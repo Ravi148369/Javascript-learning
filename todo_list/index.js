@@ -1,7 +1,5 @@
 let tasks = {
   element: document.getElementById("items-list"),
-  subElement: document.getElementById("subtask"),
-  subButton: document.getElementById("subtask-btn"),
   items: [],
   task: {
     description: "",
@@ -32,7 +30,7 @@ let tasks = {
   },
 
   render: function (action) {
-    if(action=="move"){
+    if (action == "move") {
       for (let i = 0; i < this.items.length - 1; i++) {
         if (this.items[i].sortOrder > this.items[i + 1].sortOrder) {
           let temp = this.items[i + 1];
@@ -116,17 +114,28 @@ let tasks = {
   ascSort: function () {
     for (let i = 0; i < this.items.length - 1; i++) {
       if (this.items[i].priority > this.items[i + 1].priority) {
-        let temp = this.items[i];
+
+        const sortOrder=this.items[i].sortOrder
+        this.items[i].sortOrder=this.items[i+1].sortOrder
+        this.items[i+1].sortOrder=sortOrder
+
+        const temp = this.items[i];
         this.items[i] = this.items[i + 1];
         this.items[i + 1] = temp;
+
         i = -1;
       }
     }
-    this.render("sort");
+    this.render();
   },
   dscSort: function () {
     for (let i = 0; i < this.items.length - 1; i++) {
       if (this.items[i].priority < this.items[i + 1].priority) {
+
+        const sortOrder=this.items[i].sortOrder
+        this.items[i].sortOrder=this.items[i+1].sortOrder
+        this.items[i+1].sortOrder=sortOrder
+        
         let temp = this.items[i];
         this.items[i] = this.items[i + 1];
         this.items[i + 1] = temp;
