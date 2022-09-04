@@ -57,12 +57,21 @@ let tasks = {
         btn_div.style.display='none'
         const subtext=document.createElement('textarea')
         const subButton=document.createElement('button')
+        const cancelButton=document.createElement('button')
+        const div=document.createElement('div')
+        div.className='space-evenly'
         subButton.onclick=()=>{
           this.add({subtask:subtext.value,index:value.sortOrder})
           btn_div.style.display='block'
         }
+        cancelButton.onclick=()=>{
+          div.style.display='none'
+          btn_div.style.display='block'
+        }
         subButton.textContent="Add subTask"
-        li.append(subtext,subButton)
+        cancelButton.textContent="cancel"
+        div.append(subtext,subButton,cancelButton)
+        li.append(div)
       } 
       addSub.textContent="Add SubTask"
       up_button.textContent="Up"
