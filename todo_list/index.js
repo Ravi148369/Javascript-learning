@@ -1,109 +1,108 @@
 let tasks = {
   element: document.getElementById("items-list"),
-  subElement:document.getElementById("subtask"),
-  subButton:document.getElementById('subtask-btn'),
+  subElement: document.getElementById("subtask"),
+  subButton: document.getElementById("subtask-btn"),
   items: [],
   task: {
     description: "",
     id: 1,
     is_deleted: false,
     priority: 2,
-    sortOrder:null,
-    subtask:[]
+    sortOrder: null,
+    subtask: [],
   },
   add: function (task) {
-    if(task.subtask){
-      this.items[task.index-1].subtask.push(task.subtask)
-      this.render()
-      return
+    if (task.subtask) {
+      this.items[task.index - 1].subtask.push(task.subtask);
+      this.render();
+      return;
     }
     if (task.description !== "") {
       this.task.description = task.description;
       this.task.id = this.items.length + 1;
       this.task.priority = task.priority;
-      this.task.sortOrder=this.items.length+1
-      this.task.subtask=[]
-      task=Object.assign(task,this.task)
+      this.task.sortOrder = this.items.length + 1;
+      this.task.subtask = [];
+      task = Object.assign(task, this.task);
       this.items.push(task);
       this.render(this.task);
-      return
+      return;
     }
-
     alert("please enter task");
   },
 
   render: function () {
-    for(let i=0;i<this.items.length-1;i++){
-      if(this.items[i].sortOrder>this.items[i+1].sortOrder){
-        let temp=this.items[i+1]
-        this.items[i+1]=this.items[i]
-        this.items[i]=temp
-        i=-1
+    for (let i = 0; i < this.items.length - 1; i++) {
+      if (this.items[i].sortOrder > this.items[i + 1].sortOrder) {
+        let temp = this.items[i + 1];
+        this.items[i + 1] = this.items[i];
+        this.items[i] = temp;
+        i = -1;
       }
     }
     this.element.innerHTML = "";
     this.items.map((value) => {
-      const div=document.createElement('div')
+      const div = document.createElement("div");
       const li = document.createElement("div");
-      const btn_div=document.createElement('div')
+      const btn_div = document.createElement("div");
       const button = document.createElement("button");
-      const up_button=document.createElement('button')
-      const down_button=document.createElement('button')
+      const up_button = document.createElement("button");
+      const down_button = document.createElement("button");
       const p = document.createElement("p");
-      const addSub=document.createElement('button')
-      li.className="space-evenly"
-      div.className="task-list"
-      addSub.onclick=()=>{
-        btn_div.style.display='none'
-        const subtext=document.createElement('textarea')
-        const subButton=document.createElement('button')
-        const cancelButton=document.createElement('button')
-        const div=document.createElement('div')
-        div.className='space-evenly'
-        subButton.onclick=()=>{
-          this.add({subtask:subtext.value,index:value.sortOrder})
-          btn_div.style.display='block'
-        }
-        cancelButton.onclick=()=>{
-          div.style.display='none'
-          btn_div.style.display='block'
-        }
-        subButton.textContent="Add subTask"
-        cancelButton.textContent="cancel"
-        div.append(subtext,subButton,cancelButton)
-        li.append(div)
-      } 
-      addSub.textContent="Add SubTask"
-      up_button.textContent="Up"
-      down_button.textContent="Down"
+      const addSub = document.createElement("button");
+      li.className = "space-evenly";
+      div.className = "task-list";
+      addSub.onclick = () => {
+        btn_div.style.display = "none";
+        const subtext = document.createElement("textarea");
+        const subButton = document.createElement("button");
+        const cancelButton = document.createElement("button");
+        const div = document.createElement("div");
+        div.className = "space-evenly";
+        subButton.onclick = () => {
+          this.add({ subtask: subtext.value, index: value.sortOrder });
+          btn_div.style.display = "block";
+        };
+        cancelButton.onclick = () => {
+          div.style.display = "none";
+          btn_div.style.display = "block";
+        };
+        subButton.textContent = "Add subTask";
+        cancelButton.textContent = "cancel";
+        div.append(subtext, subButton, cancelButton);
+        li.append(div);
+      };
+      addSub.textContent = "Add SubTask";
+      up_button.textContent = "Up";
+      down_button.textContent = "Down";
       button.textContent = "delete";
 
-      up_button.onclick=()=>this.move(value.sortOrder,"up")
-      down_button.onclick=()=>this.move(value.sortOrder,"down")
-      button.onclick = () =>this.remove(value.id, p);
-      
-      btn_div.append(addSub,up_button,down_button,button)
+      up_button.onclick = () => this.move(value.sortOrder, "up");
+      down_button.onclick = () => this.move(value.sortOrder, "down");
+      button.onclick = () => this.remove(value.id, p);
+
+      btn_div.append(addSub, up_button, down_button, button);
       p.innerText = value.description;
-      if(value.is_deleted){
-        p.style.textDecoration='line-through'
+      if (value.is_deleted) {
+        p.style.textDecoration = "line-through";
       }
-      if(value.sortOrder==1){
-        up_button.style.display='none'
+      if (value.sortOrder == 1) {
+        up_button.style.display = "none";
       }
-      if(value.sortOrder==this.items.length){
-        down_button.style.display='none'
+      if (value.sortOrder == this.items.length) {
+        down_button.style.display = "none";
       }
       li.appendChild(p);
       li.appendChild(btn_div);
-      div.append(li)
-      if(value.subtask.length!==0){
-        const ul=document.createElement('ul')
-        value.subtask.map(value=>{
-          const li=document.createElement('li')
-          li.innerText=value
-          ul.append(li)
-        })
-        div.append(ul)
+      div.append(li);
+      if (value.subtask.length !== 0) {
+        const ul = document.createElement("ul");
+        value.subtask.map((value) => {
+          const li = document.createElement("li");
+          li.innerText = value;
+          ul.append(li);
+        });
+        div.append(ul);
       }
       this.element.append(div);
     });
@@ -134,17 +133,17 @@ let tasks = {
     }
     this.render(this.items);
   },
-  move: function(sortOrder,move){
-    if(move=='up'){
-      this.items[sortOrder-1].sortOrder=sortOrder-1;
-      this.items[sortOrder-2].sortOrder=sortOrder;
-      this.render()
+  move: function (sortOrder, move) {
+    if (move == "up") {
+      this.items[sortOrder - 1].sortOrder = sortOrder - 1;
+      this.items[sortOrder - 2].sortOrder = sortOrder;
+      this.render();
       return;
     }
 
-    this.items[sortOrder-1].sortOrder=sortOrder+1
-    this.items[sortOrder].sortOrder=sortOrder
-    
-    this.render()
-  }
+    this.items[sortOrder - 1].sortOrder = sortOrder + 1;
+    this.items[sortOrder].sortOrder = sortOrder;
+
+    this.render();
+  },
 };
