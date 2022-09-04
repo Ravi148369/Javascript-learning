@@ -1,26 +1,37 @@
 let tasks = {
   element: document.getElementById("items-list"),
+  subElement:document.getElementById("subtask"),
+  subButton:document.getElementById('subtask-btn'),
   items: [],
   task: {
     description: "",
     id: 1,
     is_deleted: false,
     priority: 2,
-    sortOrder:null
+    sortOrder:null,
+    subtask:[]
   },
   add: function (task) {
+    if(task.subtask){
+      this.items[task.index-1].subtask.push(task.subtask)
+      this.render()
+      return
+    }
     if (task.description !== "") {
       this.task.description = task.description;
       this.task.id = this.items.length + 1;
       this.task.priority = task.priority;
       this.task.sortOrder=this.items.length+1
+      this.task.subtask=[]
       task=Object.assign(task,this.task)
       this.items.push(task);
       this.render(this.task);
-      return;
+      return
     }
+
     alert("please enter task");
   },
+
   render: function (task) {
     for(let i=0;i<this.items.length-1;i++){
       if(this.items[i].sortOrder>this.items[i+1].sortOrder){
@@ -38,7 +49,20 @@ let tasks = {
       const up_button=document.createElement('button')
       const down_button=document.createElement('button')
       const p = document.createElement("p");
-
+      const addSub=document.createElement('button')
+      li.className="task-list"
+      addSub.onclick=()=>{
+        btn_div.style.display='none'
+        const subtext=document.createElement('textarea')
+        const subButton=document.createElement('button')
+        subButton.onclick=()=>{
+          this.add({subtask:subtext.value,index:value.id})
+          btn_div.style.display='block'
+        }
+        subButton.textContent="Add subTask"
+        li.append(subtext,subButton)
+      } 
+      addSub.textContent="Add SubTask"
       up_button.textContent="Up"
       down_button.textContent="Down"
       button.textContent = "delete";
@@ -47,7 +71,7 @@ let tasks = {
       down_button.onclick=()=>this.move(value.sortOrder,"down")
       button.onclick = () =>this.remove(value.id, p);
       
-      btn_div.append(up_button,down_button,button)
+      btn_div.append(addSub,up_button,down_button,button)
       p.innerText = value.description;
       if(value.is_deleted){
         p.style.textDecoration='line-through'
@@ -59,6 +83,15 @@ let tasks = {
         down_button.style.display='none'
       }
       li.appendChild(p);
+      if(value.subtask.length!==0){
+        const ul=document.createElement('ul')
+        value.subtask.map(value=>{
+          const li=document.createElement('li')
+          li.innerText=value
+          ul.append(li)
+        })
+        li.append(ul)
+      }
       li.appendChild(btn_div);
       this.element.append(li);
     });
@@ -99,6 +132,7 @@ let tasks = {
 
     this.items[sortOrder-1].sortOrder=sortOrder+1
     this.items[sortOrder].sortOrder=sortOrder
+    
     this.render(this.items)
   }
 };
