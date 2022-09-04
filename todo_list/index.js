@@ -31,13 +31,15 @@ let tasks = {
     alert("please enter task");
   },
 
-  render: function () {
-    for (let i = 0; i < this.items.length - 1; i++) {
-      if (this.items[i].sortOrder > this.items[i + 1].sortOrder) {
-        let temp = this.items[i + 1];
-        this.items[i + 1] = this.items[i];
-        this.items[i] = temp;
-        i = -1;
+  render: function (action) {
+    if(action=="move"){
+      for (let i = 0; i < this.items.length - 1; i++) {
+        if (this.items[i].sortOrder > this.items[i + 1].sortOrder) {
+          let temp = this.items[i + 1];
+          this.items[i + 1] = this.items[i];
+          this.items[i] = temp;
+          i = -1;
+        }
       }
     }
     this.element.innerHTML = "";
@@ -120,7 +122,7 @@ let tasks = {
         i = -1;
       }
     }
-    this.render(this.items);
+    this.render("sort");
   },
   dscSort: function () {
     for (let i = 0; i < this.items.length - 1; i++) {
@@ -131,19 +133,19 @@ let tasks = {
         i = -1;
       }
     }
-    this.render(this.items);
+    this.render();
   },
   move: function (sortOrder, move) {
     if (move == "up") {
       this.items[sortOrder - 1].sortOrder = sortOrder - 1;
       this.items[sortOrder - 2].sortOrder = sortOrder;
-      this.render();
+      this.render("move");
       return;
     }
 
     this.items[sortOrder - 1].sortOrder = sortOrder + 1;
     this.items[sortOrder].sortOrder = sortOrder;
 
-    this.render();
+    this.render("move");
   },
 };
