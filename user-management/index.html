@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Register Page</h1>
+    </header>
+    <main>
+        <section class="align">
+            <form                     
+                onsubmit="users.add(
+                    {
+                        name:fname.value,
+                        username:username.value,
+                        email:email.value,
+                        phone:phonenumber.value,
+                        password:password.value
+                    })"
+            action="./viewPage.html">
+
+                <label for="fname">Name :</label>
+                <input type="text" id="fname" placeholder="Enter name" required>
+                <label for="username">Username :</label>
+                <input type="text" id="username" placeholder="Enter Username" required>
+                <label for="email">Email :</label>
+                <input type="email" id="email" placeholder="Enter email" required>
+                <label for="phonenumber" >Phone Number :</label>
+                <input type="tel" id="phonenumber" placeholder="Phone Number" required>
+                <label for="password">Password :</label>
+                <input type="password" placeholder="Enter Password" id="password" required>
+                <input type="submit" value="Register">
+            </form>
+        </section>
+    </main>
+</body>
+<script>
+        const id=localStorage.getItem('key')
+        const user=localStorage.getItem(id).split(',')
+        document.querySelector('#fname').value=user[0]
+        document.querySelector('#username').value=user[1]
+        document.querySelector('#email').value=user[2]
+        document.querySelector('#phonenumber').value=user[3]
+</script>
+<script src="./index.js"></script>
+</html>

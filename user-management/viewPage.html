@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <header>
+        <h1>View Page</h1>
+    </header>
+    <main>
+        <section class="search-box">
+            <div>
+                <label for="search"><i class="material-icons">search</i></label>
+                <input type="text" placeholder="Search here" id="search">
+            </div>
+            <button onclick="users.search(search.value)">Search</button>
+            <button onclick="users.render()">View all</button>
+        </section>
+        <article class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email Adress</th>
+                        <th>Mobile</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                        <td>1</td>
+                        <td>Ravi</td>
+                        <td>ravi</td>
+                        <td>rp789742@gmail.com</td>
+                        <td>7009267224</td>
+                        <td>active</td>
+                        <td>2020-09-10</td>
+                        <td>
+                            <button class="bg-green">View</button>
+                            <button class="bg-grey">Edit</button>
+                            <button class="bg-red">Remove</button>
+                            <button class="bg-yellow">Disable</button>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </article>
+    </main>
+</body>
+<script src="./index.js"></script>
+</html>
