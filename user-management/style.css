@@ -23,10 +23,20 @@ form{
     flex-direction: column;
 }
 form input{
+    outline: none;
     height: 40px;
     border-radius: 5px;
     padding-left: 8px;
     border: 1px solid grey;
+}
+form input:invalid:focus{
+    border: 2px solid red;    
+}
+form input:focus{
+    border: 2px solid grey;
+}
+form input:valid{
+    border: 2px solid green;
 }
 form label{
     margin-top: 16px;
@@ -113,4 +123,13 @@ button{
 }
 h3{
     text-align: center;
+}
+.profile{
+    display: flex;
+}
+.profile div{
+    margin-left: 24px;
+}
+.profile div h3{
+    text-align: left;
 }

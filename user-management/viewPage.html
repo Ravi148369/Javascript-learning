@@ -4,57 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
-    <header>
-        <h1>View Page</h1>
-    </header>
     <main>
-        <section class="search-box">
-            <div>
-                <label for="search"><i class="material-icons">search</i></label>
-                <input type="text" placeholder="Search here" id="search">
+        <section class="profile">
+            <img src="./images/profile.jfif" alt="not found" width="300px">
+            <div id="js-profile">
+                <!-- <h3>Name : Ravi Pal</h3> -->
             </div>
-            <button onclick="users.search(search.value)">Search</button>
-            <button onclick="users.render()">View all</button>
         </section>
-        <article class="table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>SL</th>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Email Adress</th>
-                        <th>Mobile</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- <tr>
-                        <td>1</td>
-                        <td>Ravi</td>
-                        <td>ravi</td>
-                        <td>rp789742@gmail.com</td>
-                        <td>7009267224</td>
-                        <td>active</td>
-                        <td>2020-09-10</td>
-                        <td>
-                            <button class="bg-green">View</button>
-                            <button class="bg-grey">Edit</button>
-                            <button class="bg-red">Remove</button>
-                            <button class="bg-yellow">Disable</button>
-                        </td>
-                    </tr> -->
-                </tbody>
-            </table>
-        </article>
     </main>
 </body>
-<script src="./index.js"></script>
+<script>
+    const id = localStorage.getItem('view')
+    if(id){
+        const user = JSON.parse(localStorage.getItem(id))
+        if(user){
+            const div = document.querySelector('#js-profile')
+            const name = document.createElement('h3')
+            const username = document.createElement('h3')
+            const email = document.createElement('h3')
+            const phone = document.createElement('h3')
+            const status = document.createElement('h3')
+            name.textContent = `Name : ${user.name}`
+            username.textContent=`Username : ${user.username}`
+            email.textContent=`Email : ${user.email}`
+            phone.textContent=`Mobile : ${user.mobile}`
+            status.textContent=`Status : ${user.status}`
+            div.append(name,username,email,phone,status)
+        }
+    }
+</script>
 </html>

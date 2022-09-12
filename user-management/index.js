@@ -1,188 +1,154 @@
-const users = {
-  table: document.querySelector("table tbody"),
-  items: localStorage,
-  date: new Date(),
-  email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-  phone: /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
-
-  add: function (user) {
-    if (localStorage.length == 0) {
-      this.items.setItem("key", 1);
-    }
-    if (
-      user.name.trim() == "" ||
-      user.username.trim() == "" ||
-      user.email.trim() == "" ||
-      user.phone.trim() == "" ||
-      user.password == ""
-    ) {
-      alert("Invalid Credentials");
-      return;
-    }
-    if (user.email.match(this.email) && this.phone.exec(user.phone)) {
-      this.items.setItem(this.items.getItem("key"), [
-        user.name.trim(),
-        user.username.trim(),
-        user.email.trim(),
-        user.phone.trim(),
-        "inactive",
-        this.date.toLocaleString(),
-        false,
-        user.password,
-      ]);
-      this.items.setItem("key", this.items.length);
-      this.render();
-      return;
-    }
-    alert("Invalid Credentials");
-  },
-  render: function () {
-    this.table.innerHTML = "";
-    for (let i = 1, j = 1; i <= this.items.length - 1; i++) {
-      const user = this.items.getItem(`${i}`).split(",");
-
-      if (user[7] == "false") {
-        console.log("hello world");
-        const tr = document.createElement("tr");
-        const id = document.createElement("td");
-        const name = document.createElement("td");
-        const username = document.createElement("td");
-        const email = document.createElement("td");
-        const phone = document.createElement("td");
-        const status = document.createElement("td");
-        const created = document.createElement("td");
-        const actions = document.createElement("td");
-        const viewButton = document.createElement("button");
-        const editButton = document.createElement("button");
-        const removeButton = document.createElement("button");
-        const statusButton = document.createElement("button");
-
-        id.innerText = j++;
-        name.textContent = user[0];
-        username.textContent = user[1];
-        email.textContent = user[2];
-        phone.textContent = user[3];
-        status.textContent = user[4];
-        created.textContent = user[5] + user[6];
-
-        
-        viewButton.textContent = "View";
-        viewButton.classList.add("bg-green");
-        editButton.classList.add("bg-grey");
-        removeButton.textContent = "Remove";
-        removeButton.classList.add("bg-red");
-        editButton.textContent = "Edit";
-
-        if (user[4] == "active") {
-          statusButton.textContent = "Disable";
-          statusButton.addEventListener("click", () => this.statusToggle(i));
-        } else {
-          statusButton.textContent = "able";
-          statusButton.addEventListener("click", () => this.statusToggle(i));
+const users={
+    date:new Date(),
+    item:localStorage,
+    tbody:document.querySelector('table tbody'),
+    add:function(formData){
+        const user={
+            name:formData.name,
+            username:formData.username,
+            email:formData.email,
+            mobile:formData.phone,
+            status:"Inactive",
+            isdeleted:false,
+            created:this.date.toLocaleDateString()
         }
-        statusButton.classList.add("bg-yellow");
-        removeButton.addEventListener("click", () => this.remove(i));
-        editButton.addEventListener("click", () => this.edit(i));
-        actions.append(viewButton, editButton, removeButton, statusButton);
-        tr.append(id, name, username, email, phone, status, created, actions);
-        this.table.append(tr);
-      }
-    }
-  },
-  remove: function (id) {
-    if (confirm("are you sure you want to delete :")) {
-      const user = this.items.getItem(id).split(",");
-      user[7] = true;
-      this.items.setItem(id, [...user]);
-      this.render();
-    }
-  },
-  edit: function (id) {
-    if (confirm("are you want to edit :")) {
-      this.items.setItem("key", id);
-      const user = this.items.getItem(id).split(",");
-      location.href = "./index.html";
-      document.querySelector("#fname").value = user[0];
-      document.querySelector("#username").value = user[1];
-      document.querySelector("#email").value = user[2];
-      document.querySelector("#phonenumber").value = user[3];
-      return;
-    }
-  },
-  statusToggle: function (id) {
-    if (confirm("are you sure you want to change status :")) {
-      const user = this.items.getItem(id).split(",");
-      if (user[4] == "inactive") {
-        user[4] = "active";
-        this.items.setItem(id, [...user]);
-        this.render();
-        return;
-      }
-      user[4] = "inactive";
-      this.items.setItem(id, [...user]);
-      this.render();
-    }
-  },
-  search: function (value) {
-    this.table.innerHTML = "";
-    if (value.trim() == "") {
-      alert("invalid credentials");
-      return;
-    }
-    for (let i = 1, j = 1; i <= this.items.length - 1; i++) {
-      const user = this.items.getItem(`${i}`).split(",");
-      if (
-        user[0].toLocaleLowerCase() == value.toLocaleLowerCase() ||
-        user[1].toLocaleLowerCase() == value.toLocaleLowerCase()
-      ) {
-        if (user[7] == "false") {
-          const tr = document.createElement("tr");
-          const id = document.createElement("td");
-          const name = document.createElement("td");
-          const username = document.createElement("td");
-          const email = document.createElement("td");
-          const phone = document.createElement("td");
-          const status = document.createElement("td");
-          const created = document.createElement("td");
-          const actions = document.createElement("td");
-          const viewButton = document.createElement("button");
-          const editButton = document.createElement("button");
-          const removeButton = document.createElement("button");
-          const statusButton = document.createElement("button");
+        if(!(formData.email==''||formData.name==''||formData.phone==''||formData.username=='')){
+            this.item.setItem(this.item.getItem('key'),JSON.stringify(user))
+            this.item.setItem('key',this.item.length-1)
+            this.render()
+            return
+        }
+        alert('please enter input correctly')
+    },
+    render:function(){
+        this.tbody.innerHTML=''
+        for(let i = 0,j=0;i < this.item.length-1; i++){
+            const user = JSON.parse(this.item.getItem(i)) 
+            if(!user.isdeleted){
+                j++
+                const tr = document.createElement("tr");
+                const id = document.createElement("td");
+                const name = document.createElement("td");
+                const username = document.createElement("td");
+                const email = document.createElement("td");
+                const phone = document.createElement("td");
+                const status = document.createElement("td");
+                const created = document.createElement("td");
+                const actions = document.createElement("td");
+                const viewButton = document.createElement("button");
+                const editButton = document.createElement("button");
+                const removeButton = document.createElement("button");
+                const statusButton = document.createElement("button");
 
-          editButton.textContent = "Edit";
-          id.innerText = j++;
-          name.textContent = user[0];
-          username.textContent = user[1];
-          email.textContent = user[2];
-          phone.textContent = user[3];
-          status.textContent = user[4];
-          created.textContent = user[5];
-          viewButton.textContent = "View";
-          viewButton.classList.add("bg-green");
-          editButton.classList.add("bg-grey");
-          removeButton.textContent = "Remove";
-          removeButton.classList.add("bg-red");
+                tr.id=`id${i}`
+                id.textContent=j
+                name.textContent=user.name
+                username.textContent=user.username
+                email.textContent=user.email
+                phone.textContent=user.mobile
+                status.textContent=user.status
+                created.textContent=user.created
 
-          if (user[4] == "active") {
-            statusButton.textContent = "Disable";
-            statusButton.addEventListener("click", () => this.statusToggle(i));
-          } else {
-            statusButton.textContent = "able";
-            statusButton.addEventListener("click", () => this.statusToggle(i));
-          }
-          statusButton.classList.add("bg-yellow");
+                viewButton.textContent='View'
+                editButton.textContent='Edit'
+                removeButton.textContent='Remove'
+                statusButton.textContent="able"
+                if(user.status=="Active"){
+                    statusButton.textContent='disable'
+                }
+                viewButton.classList.add('bg-green')
+                editButton.classList.add('bg-grey')
+                removeButton.classList.add('bg-red')
+                statusButton.classList.add('bg-yellow')
 
-          removeButton.addEventListener("click", () => this.remove(i));
-          editButton.addEventListener("click", () => this.edit(i));
-          actions.append(viewButton, editButton, removeButton, statusButton);
-          tr.append(id, name, username, email, phone, status, created, actions);
-          this.table.append(tr);
-          return;
-        }   
-      }
+                viewButton.addEventListener('click',()=>{
+                    this.view(i)
+                })  
+
+                editButton.addEventListener('click',()=>{
+                    this.edit(i)
+                })
+
+                removeButton.addEventListener('click',()=>{
+                    this.remove(i)
+                })
+
+                statusButton.addEventListener('click',()=>{
+                    this.statusToggle(i)
+                })
+
+                actions.append(viewButton,editButton,removeButton,statusButton)
+                tr.append(id,name,username,email,phone,status,created,actions)
+                this.tbody.append(tr)
+            }
+        }
+    },
+    search:function(value){
+        for(let i=0;i<this.item.length-1;i++){
+            const user = JSON.parse(this.item.getItem(i))
+            if(!user.isdeleted){
+                if(user.username.toLowerCase().includes(value.toLowerCase())||user.email.toLowerCase().includes(value.toLowerCase())||user.name.toLowerCase().includes(value.toLowerCase())){
+                    document.querySelector(`#id${i}`).style.display=''
+                }
+                else{
+                    document.querySelector(`#id${i}`).style.display='none'
+                }
+            }
+        }
+    },
+    statusToggle:function(id){
+        const user = JSON.parse(this.item.getItem(id))
+        if(user.status=='Active'){
+            user.status="Inactive"
+            this.item.setItem(id,JSON.stringify(user))
+            this.render()
+            return
+        }
+        user.status='Active'
+        this.item.setItem(id,JSON.stringify(user))
+        this.render()
+        
+    },
+    remove:function(id){
+        const user = JSON.parse(this.item.getItem(id))
+        user.isdeleted=true
+        this.item.setItem(id,JSON.stringify(user))
+        this.render()
+    },
+    edit:function(id){
+        const user = JSON.parse(this.item.getItem(id))
+        const fname=document.querySelector('#fname')
+        const username=document.querySelector('#username')
+        const mobile=document.querySelector('#phonenumber')
+        const submit=document.querySelector('input[type=submit]')
+        const email=document.querySelector('#email')
+        fname.value=user.name
+        username.value=user.username
+        mobile.value=user.mobile
+        email.value=user.email
+        submit.value="Save"
+        submit.addEventListener('click',()=>{
+            submit.value='Submit'
+            this.item.setItem('key',id)
+            this.add({
+                name:fname.value.trim(),
+                username:username.value.trim(),
+                email:email.value.trim(),
+                phone:phonenumber.value.trim()
+            })
+        })
+    },
+    view:function(id){
+        this.item.setItem('view',id)
+        location.href='./viewPage.html'
     }
-    alert("no record found")
-  },
-};
-users.render();
+}
+
+document.querySelector('form').addEventListener('submit',(e) => {
+    document.querySelector('#fname').value=''
+    document.querySelector('#username').value=''
+    document.querySelector('#email').value=''
+    document.querySelector('#phonenumber').value=''
+    e.preventDefault()
+})
+users.render()
