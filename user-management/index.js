@@ -52,9 +52,9 @@ const users={
                 viewButton.textContent='View'
                 editButton.textContent='Edit'
                 removeButton.textContent='Remove'
-                statusButton.textContent="able"
+                statusButton.textContent="Enable"
                 if(user.status=="Active"){
-                    statusButton.textContent='disable'
+                    statusButton.textContent='Disable'
                 }
                 viewButton.classList.add('bg-green')
                 editButton.classList.add('bg-grey')

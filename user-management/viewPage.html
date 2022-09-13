@@ -19,10 +19,10 @@
 </body>
 <script>
     const id = localStorage.getItem('view')
+    const div = document.querySelector('#js-profile')
     if(id){
         const user = JSON.parse(localStorage.getItem(id))
         if(user){
-            const div = document.querySelector('#js-profile')
             const name = document.createElement('h3')
             const username = document.createElement('h3')
             const email = document.createElement('h3')
@@ -35,6 +35,11 @@
             status.textContent=`Status : ${user.status}`
             div.append(name,username,email,phone,status)
         }
+    }
+    else{
+        const h1=document.createElement('h1')
+        h1.textContent='No profile found'
+        div.append(h1)   
     }
 </script>
 </html>
