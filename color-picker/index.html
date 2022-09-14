@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <section class="color">
+
+    </section>
+    <section class="control-panel">
+        <h1>Color Picker</h1>
+        <div class="rgb-span">
+            <span>rgb(0,0,0)</span>
+            <i class="material-icons" title="copy">content_copy</i>
+        </div>
+        <input type="range" id="red" max="255" min="0" >
+        <div class="align">
+            <span>0</span>
+            <span>255</span>
+        </div>
+        <input type="range" id="green" max="255" min="0" >
+        <div class="align">
+            <span>0</span>
+            <span>255</span>
+        </div>
+        <input type="range" id="blue" max="255" min="0" >
+        <div class="align">
+            <span>0</span>
+            <span>255</span>
+        </div>
+    </section>
+    <section>
+        <div class="clipboard-text">
+            <p>copied</p>
+        </div>
+    </section>
+</body>
+<script src="./index.js"></script>
+</html>

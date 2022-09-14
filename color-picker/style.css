@@ -1,0 +1,58 @@
+body{
+    display: flex;
+    margin: 0;
+}
+input{
+    width: 300px;
+}
+h1{
+    text-align: center;   
+}
+.align{
+    /* border: 1px solid black; */
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    padding:0px 4px;
+}
+.color{
+    width:75vw;
+    height: 100vh;
+    background-color: purple;
+}
+.control-panel{
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    border: 1px solid black;
+}
+.rgb-span{
+    border-radius: 5px;
+    background-color: rgb(227, 227, 227);
+    font-size: 1.2em;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    margin-bottom: 12px;
+}
+.rgb-span i{
+    cursor: pointer;
+}
+
+.clipboard-text{
+    position: absolute;
+    margin-top: 75px;
+    top: 0;
+    right: 22px;
+    border-radius: 5px;
+    background-color: rgba(128, 128, 128, 0.163);
+    /* border: 1px solid black; */
+    display: none;
+}
+.clipboard-text p{
+    margin: 0;
+    padding: 2px 8px;
+}
