@@ -1,0 +1,64 @@
+button{
+    border: none;   
+    height: 40px;
+    padding: 8px 16px;
+    margin-left: 16px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+hr{
+    color: rgba(128, 128, 128, 0.548);  
+}
+h2{
+    margin: 0;
+}
+body{
+    margin: 0;
+}
+.modal-box{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background-color: rgba(239, 239, 239, 0.252);
+
+}
+.modal{
+    border-radius: 5px;
+    width: 440px;
+    height: 250px;
+    background-color: #fff;
+    box-shadow: 2px 4px 8px grey;
+}
+.modal i{
+    cursor: pointer;
+}
+.modal p{
+    padding: 8px;
+}
+.align{
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.animation{
+    transition-delay: 1s;
+    transform: scale(1.2);
+}
+.btn-div{
+    justify-content: flex-end;
+}
+.btn-div button:first-child{
+    background-color: #6c757d;
+}
+.btn-div button:last-child{
+    background-color: #007bff;
+}
+section > button{
+    margin-top: 12px;
+    background-color: #007bff;
+}
