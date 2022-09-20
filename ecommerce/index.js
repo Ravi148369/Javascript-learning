@@ -12,7 +12,7 @@
                 }
                 return elements
             },
-            render: function (index=0) {
+            render: function (index = 0) {
                 this.body.innerHTML = ''
                 this.header()
                 this.productSection(product.product[index])
@@ -39,9 +39,9 @@
                     }
                 })
                 document.addEventListener('click', (e) => {
-                    if(!searchDropDown.contains(e.target)){
+                    if (!searchDropDown.contains(e.target)) {
                         searchDropDown.style.display = 'none'
-                        input.value=''
+                        input.value = ''
                     }
                 })
                 sellingDiv.textContent = "Start Selling Now"
@@ -52,7 +52,7 @@
                 alignDiv.classList.add('flex-space-between')
                 input.addEventListener('keyup', (e) => {
                     searchDropDown.innerHTML = ''
-                    product.similarItems.map((value,index) => {
+                    product.similarItems.map((value, index) => {
                         if (e.target.value.trim() !== '') {
                             searchDropDown.style.display = 'block'
                             if (value.title.toLowerCase().includes(e.target.value.trim().toLowerCase())) {
@@ -63,7 +63,7 @@
                                 img.src = `./images/${value.imgsrc}`
                                 title.textContent = value.title
                                 item.append(img, title)
-                                item.addEventListener('click',()=>{
+                                item.addEventListener('click', () => {
                                     this.render(index)
                                 })
                                 searchDropDown.append(item)
@@ -289,13 +289,13 @@
                 const [similarItemText] = this.getElement('h3')
                 similarItemText.textContent = "Similar Items"
                 similarItemText.classList.add('align-right')
-                items.map((item,index) => {
-                    main.append(this.similarItem(item,index))
+                items.map((item, index) => {
+                    main.append(this.similarItem(item, index))
                 })
                 section.append(main)
                 this.body.append(similarItemText, section)
             },
-            similarItem: function (item,index) {
+            similarItem: function (item, index) {
                 const [itemDiv, imageDiv, productDiv] = this.getElement('div', 3)
                 const [image] = this.getElement('img')
                 const [productTitle, viewed, prize] = this.getElement('p', 3)
