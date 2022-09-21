@@ -73,7 +73,7 @@ button:disabled{
     overflow-y: scroll;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    box-shadow: 2px 2px 4px grey;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     z-index: 3;
 }
 .dropdown-item{
@@ -281,7 +281,7 @@ label{
 .similar-product{
     background-color: #fff;
     border-radius: 15px;
-    box-shadow: 2px 0px 4px grey;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .similar-image-div{
     height: 200px;
@@ -305,7 +305,7 @@ label{
     margin-top: 12px;
 }
 .similar-product-section{
-    width:260px;
+    width:255px;
     margin-bottom: 20px;
     margin-right: 46px;
 }
