@@ -1,8 +1,8 @@
 (function () {
+    "use strict"
     let product = ''
     async function getProducts() {
         product = await fetch('./Products.json').then(value => value.json())
-
         const products = {
             body: document.querySelector('#main'),
             getElement: function (element, count = 1) {
@@ -15,9 +15,9 @@
             render: function (index = 0) {
                 this.body.innerHTML = ''
                 this.header()
-                this.productSection(product.product[index])
+                this.productSection(product.product[index],index)
                 this.profile()
-                this.similarItemSection(product.similarItems)
+                this.similarItemSection(product.product)
                 this.footer()
                 this.baseFooter()
             },
@@ -27,17 +27,8 @@
                 const [option] = this.getElement('option')
                 const [input] = this.getElement('input', 1)
                 const [productList, inputDiv, sellingDiv, alignDiv, searchDropDown] = this.getElement('div', 5)
-                const [searchButton] = this.getElement('button')
 
                 searchDropDown.classList.add('dropdown')
-                searchButton.classList.add('search-btn')
-                searchButton.textContent = "Search"
-                searchButton.addEventListener('click', function () {
-                    if (input.value.trim() !== '') {
-                        alert(`you have search this : ${input.value}`)
-                        input.value = ''
-                    }
-                })
                 document.addEventListener('click', (e) => {
                     if (!searchDropDown.contains(e.target)) {
                         searchDropDown.style.display = 'none'
@@ -52,15 +43,16 @@
                 alignDiv.classList.add('flex-space-between')
                 input.addEventListener('keyup', (e) => {
                     searchDropDown.innerHTML = ''
-                    product.similarItems.map((value, index) => {
+                    product.product.map((value, index) => {
                         if (e.target.value.trim() !== '') {
                             searchDropDown.style.display = 'block'
                             if (value.title.toLowerCase().includes(e.target.value.trim().toLowerCase())) {
                                 const [item] = this.getElement('div')
-                                item.classList.add('dropdown-item')
                                 const [title] = this.getElement('p')
                                 const [img] = this.getElement('img')
-                                img.src = `./images/${value.imgsrc}`
+                                
+                                item.classList.add('dropdown-item')
+                                img.src = `./images/${value.imageSrc.image1}`
                                 title.textContent = value.title
                                 item.append(img, title)
                                 item.addEventListener('click', () => {
@@ -74,33 +66,31 @@
                 select.append(option)
                 inputDiv.append(select, input)
                 productList.append(inputDiv, searchDropDown)
-                alignDiv.append(productList, searchButton, sellingDiv)
+                alignDiv.append(productList, sellingDiv)
                 header.append(alignDiv)
                 this.body.append(header)
             },
-            productSection: function (product) {
+            productSection: function (product,index) {
                 const [main, section] = this.getElement('section', 2)
                 main.classList.add('align')
                 section.classList.add('product-section')
-                const imageSection = this.productImageSection()
-                const productDetailSection = this.productDetailSection(product)
+                const imageSection = this.productImageSection(product)
+                const productDetailSection = this.productDetailSection(product,index)
                 section.append(imageSection, productDetailSection)
                 main.append(section)
                 this.body.append(main)
-
             },
-            productImageSection: function () {
-
+            productImageSection: function (product) {
                 const [main] = this.getElement('section')
                 const [imageSection] = this.getElement('section')
                 const [imgDiv, sideImageDiv1, sideImageDiv2, sideImageDiv3, mainImageDiv] = this.getElement('div', 5)
                 const [img1, img2, img3, mainImg] = this.getElement('img', 4)
 
                 imgDiv.classList.add('image-div')
-                mainImg.src = './images/iphone.jpg'
-                img1.src = './images/Rectangle.jpg'
-                img2.src = './images/Rectangle-1.jpg'
-                img3.src = './images/Rectangle-2.jpg'
+                mainImg.src = `./images/${product.imageSrc.main}`
+                img1.src = `./images/${product.imageSrc.image1}`
+                img2.src = `./images/${product.imageSrc.image2}`
+                img3.src = `./images/${product.imageSrc.image3}`
                 mainImg.alt = 'not found'
                 img1.alt = "not found"
                 img2.alt = 'not found'
@@ -115,7 +105,7 @@
                 main.append(imageSection)
                 return main
             },
-            productDetailSection: function (product) {
+            productDetailSection: function (product, index) {
                 const [infoDiv, radioButtonDiv, alignDiv, deliveryDiv, quantityDiv, deliveryDays] = this.getElement('div', 6)
                 const [title] = this.getElement('h2')
                 const [prize] = this.getElement('h3')
@@ -123,27 +113,33 @@
                 const [storePickupLabel, deliveryLabel] = this.getElement('label', 2)
                 const [decreaseIcon, increaseIcon] = this.getElement('i', 2)
                 const [storePickupRadioButton, deliveryRadioButton] = this.getElement('input', 2)
-                const FormDiv = this.makeOfferForm()
-
-                for (let i = 0; i < product.color.length; i++) {
+                const FormDiv = this.makeOfferForm(product, index)
+                radioButtonDiv.classList.add('color-radioButton')
+                product.color.map((value,index)=>{
                     const [radioInput] = this.getElement('input')
+                    const [label]=this.getElement('label')
+                    label.setAttribute('for',`color${index}`)
+                    label.style.backgroundColor=value.value
                     radioInput.setAttribute('type', 'radio');
                     radioInput.setAttribute('name', 'color');
-                    radioInput.setAttribute('value', product.color[i].name);
+                    radioInput.setAttribute('value', value.name);
+                    radioInput.id=`color${index}`
                     radioInput.addEventListener('click', function () {
-                        radioInput.style.accentColor = product.color[i].value
+                        radioInput.style.accentColor = value.value
                         color.textContent = `Color : ${radioInput.value}`
                     })
-                    radioButtonDiv.append(radioInput)
-                }
+                    radioButtonDiv.append(radioInput,label)
+                })
                 quantityDiv.classList.add('quantity-icons')
                 alignDiv.classList.add('space-between')
                 infoDiv.classList.add('product-div')
                 deliveryDiv.classList.add('delivery-div')
                 quantityText.classList.add('grey-txt')
+                deliveryText.classList.add('grey-txt')
+                location.classList.add('grey-txt')
+                views.classList.add('grey-txt')
                 quantityText.textContent = 'Quantity'
                 deliveryText.textContent = 'Delivery'
-                deliveryText.classList.add('grey-txt')
                 title.textContent = product.title
                 location.textContent = product.location
                 productInfo.textContent = product.information
@@ -196,7 +192,7 @@
                 infoDiv.append(title, alignDiv, productInfo, prize, color, radioButtonDiv, deliveryText, deliveryDiv, quantityText, quantityDiv, deliveryDays, FormDiv)
                 return infoDiv
             },
-            makeOfferForm: function () {
+            makeOfferForm: function (product,index) {
                 const [offerFormDiv, FormDiv, buttonDiv, closeDiv, deliveryDiv, paymentDiv] = this.getElement('div', 7)
                 const [buyNowButton, makeOfferButton, submitButton] = this.getElement('button', 3)
                 const [offerInput, locationInput, radioPickupButton, radioDeliveryButton, radioOnlineButton, radioOfflineButton] = this.getElement('input', 6)
@@ -254,15 +250,15 @@
                 cutIcon.addEventListener('click', function () {
                     FormDiv.style.display = 'none'
                 })
-                if (product.product[0].Bought) {
+                if (product.Bought) {
                     buyNowButton.style.backgroundColor = 'grey'
                     buyNowButton.style.cursor = 'not-allowed'
                     buyNowButton.disabled = true
                 }
                 buyNowButton.addEventListener('click', () => {
-                    if (!this.product[0].Bought) {
-                        this.product[0].Bought = 'true'
-                        this.render(this.product[0])
+                    if (!product.Bought) {
+                        product.Bought = 'true'
+                        this.render(index)
                     }
                 })
                 submitButton.classList.add('submit-button')
@@ -303,9 +299,9 @@
                 imageDiv.classList.add('similar-image-div')
                 productDiv.classList.add('similar-product')
                 itemDiv.classList.add('similar-product-section')
-                image.src = `./images/${item.imgsrc}`
+                image.src = `./images/${item.imageSrc.image1}`
                 productTitle.textContent = `${item.title}`
-                viewed.textContent = `${item.views} viewed`
+                viewed.textContent = `${item.viewed} viewed`
                 prize.textContent = `$${item.prize}`
                 itemDiv.addEventListener('click', () => {
                     this.render(index)

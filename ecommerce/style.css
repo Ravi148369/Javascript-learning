@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap');
 body{
     margin: 0;
     background-color: rgb(249, 249, 249);
+    font-family: 'Source Sans Pro', sans-serif;
 }
 /* header section, navbar section*/
 header{
@@ -251,6 +253,12 @@ label{
     border: 2px solid grey;
     padding: 8px 16px;
     margin-right: 16px;
+}
+.color-radioButton label{
+    padding: 8px 17px;
+    border-radius: 50%;
+    outline: 2px solid rgb(237, 237, 237);
+    outline-offset: 2px ;
 }
 .margintop{
     margin-top: 24px;
