@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+    position: relative;
+}
+.ground{
+    height:100vh;
+    width: 100vw;
+    background-color: aquamarine;
+    position: absolute;
+}
+.play{
+    width: 100px;
+    height: 100px;
+    --x:10px;
+    --y:10px;
+    --rotateX: 0;
+    --rotate: 0;
+    transform: translateX(var(--x)) translateY(var(--y)) rotateY(var(--rotateX)) rotate(var(--rotate));
+    transition: all 200ms ease;
+}
+.ground div img{
+    height: 100%;
+    width: 100%;
+    transform: scaleX(-1);
+}
