@@ -1,0 +1,53 @@
+body{
+    margin: 0;
+}
+header nav{
+    height: 60px;
+    background-color: rgb(37, 5, 5);
+    display: flex;
+    align-items: center;
+}
+header nav a{
+    text-decoration: none;
+    font-size: 1.4em;
+    color: #fff;
+    margin-left: 20px;
+    padding: 8px;
+}
+header nav a:hover{
+    color: grey;
+    transition: all 100ms ease-in;
+}
+main{
+    display: flex;
+    justify-content: center;
+}
+.align{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+.card{
+    border-radius: 5px;
+    width: 40%;
+    padding: 8px;
+    margin: 8px;
+    background-color: rgb(249, 249, 249);
+}
+.card div{
+    width: 210px;
+    height: 300px; 
+    text-align: center;
+}
+.card div img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.flexBox{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
