@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+
+<body>
+
+</body>
+<script>
+    console.log("Array static method")
+    let arr = ["R", "A", "V", "I"]
+    console.log("Array : " + arr);
+    console.log("array.toString : " + arr.toString());
+    console.log("array join method : " + arr.join('*'))
+    console.log("Pop method remove last element of an array return pop value: " + arr.pop())
+    console.log("Current Array " + arr);
+    console.log('push method add element at the end of an array return length: ' + arr.push('I'))
+    console.log("Current Array " + arr);
+    console.log("shift method removes the first element of an array return shift value : " + arr.shift())
+    console.log("Current Array " + arr);
+    console.log("unshift method add the value to an array at index 0 return length" + arr.unshift('R'))
+    console.log("Current Array " + arr);
+    // change value of index
+    arr[1] = 'a' //at index 1
+    arr[arr.length] = 'P' //at last 
+    console.log("Current array " + arr)
+
+    // deleting elements from an array
+    delete arr[4]
+    console.log("Current array and length " + arr + " " + arr.length)
+    arr = ["R", "a", "v", "i"]
+    // splice method can be used to deleting or adding new elements to an array
+
+    //removing first elements of an array using splice
+    console.log("remove first element of an array using splice return removed value " + arr.splice(0, 1))
+    console.log("Current array and length " + arr + " " + arr.length)
+
+    // adding first element to an array using splice
+    console.log("added first element 'R' to an array using splice method " + arr.splice(0, 0, "R"))
+    console.log(arr);
+    // Sort 
+    console.log("sort an array using array.sort() " + arr.sort())
+    //reverse
+    console.log("reverse an array using reverse " + arr.reverse());
+
+    // numeric array sort 
+    const numbers = [25, 1, 54, 6, 47, 100, 1, 10, 25]
+    console.log(numbers.sort((a, b) => {
+        return a > b
+    }))
+
+    //joining array
+    const firstName = ['R', 'A', 'V', 'I']
+    const lastName = ['P', 'A', 'L']
+    console.log('Joining two array using concat returns new array' + firstName.concat(lastName))
+    //joining two array using spread operator
+    console.log("joining two array using spread operator " + [...firstName, ...lastName])
+
+    // instance methods of  Array
+    // Array.of()
+    // Array.from()
+    // Array.isArray()
+    console.log(Array.of("Ravi", "pal", "is", "my", "name"))
+    console.log(Array.isArray([5, 6, 6])) //checking the array
+    console.log(Array.from({ length: 10 })) //return 10 values with undefined value
+    console.log(Array.from({ length: 10 }, (value, index) => {
+        return 2 * index //return table of two from 0-9
+    }))
+
+    //creating range from Array.from()  
+    const createRange = (start, end) => {
+        return Array.from({ length: end - start }, (value, index) => {
+            return start + index
+        })
+    }
+    console.log(createRange(5, 12))
+
+
+    // object static methods
+    const person = {
+        name: "ravi",
+        class: "bca",
+        rollno: 4211
+    }
+    console.log(Object.entries(person))     //return 3 array of key and values
+    console.log(Object.keys(person))        //return array of object keys
+    console.log(Object.values(person))      //return array of object values
+    Object.keys(person).map(value => {
+        console.log(person[value]) //return value of keys present in person object
+    })
+    Object.entries(person).map(([key, value]) => {
+        console.log(key, value) //iterating of key and values using entries with  map function
+    })
+
+
+    const feedback = [
+        { comment: "Love the burgs", rating: 4 },
+        { comment: "Horrible Service", rating: 2 },
+        { comment: "Smoothies are great, liked the burger too", rating: 5 },
+        { comment: "Ambiance needs work", rating: 3 },
+        { comment: "I DONT LIKE BURGERS", rating: 1 },
+    ]
+    console.log(feedback.find(rating => rating.comment.includes('burg')))
+    const findWord = (word) => {
+        return (feedback) => {
+            return feedback.comment.includes(word)
+        }
+    }
+    console.log(findWord("smooth")({comment:"smooth"}));
+
+    console.log(feedback.find(findWord('Smooth')))
+    const student=[
+        {
+            name:"Ravi",
+            totalMarks:82
+        },{
+            name:"Pal",
+            totalMarks:66
+        },{
+            name:"Rohit",
+            totalMarks:45   
+        },{
+            name:"kamal",
+            totalMarks:78
+        }
+    ]
+    console.log(student.filter(value=>{
+        return value.totalMarks >= 50
+    }))
+    console.log(student.filter(value=>{
+        return value.totalMarks+10>50
+    }))
+    const marks=[50,56,47,98]
+    console.log(marks.map(value=>{
+        if(value>50){
+            return "pass"
+        }
+        return "fail"
+    }))
+
+    // find : function iterate over array until the condition is false return boolean value
+    // every : function iterate over array until the condition is true
+    // map : function will return a array of boolean it iterate all over the loop
+    // some : return true if any condition is true in array
+    // console.log(Object.fromEntries(student))
+    const data=[[["Name","surname"],["ravi",'pal']]]
+    // console.log(Object.fromEntries(data))
+
+    // for (const key in student) {
+    //     console.log(key);
+    // }
+    const name={
+        n:"ravi",
+        s:'pal'
+    }
+    // for (const iterator in name) {
+    //     console.log(name[iterator]);    
+    // }
+    const str='ravi'
+    let i=123
+    // while(i > 1){
+    //     i=i/10 
+    //     console.log(i%10);
+    // }
+    // for(let i=123;i>1;i=i/10){
+    //     console.log(i%10);
+    // }
+    // i=0
+    // do{
+    //     i++
+    //     console.log(i)
+    // }while(i<10)
+
+    const map=new Map()
+    map.set('name','Ravi')
+    map.surname="pal"
+    if(map.has('name')){
+        console.log(map.get('name'));
+        map.delete('name')
+        console.log(map);
+    }
+</script>
+
+</html>
