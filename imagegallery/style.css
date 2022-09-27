@@ -101,7 +101,7 @@ img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: all 100ms ease-out;
+    transition: all 200ms ease-out;
 }
 .slider{
     width: 100%;
@@ -118,5 +118,10 @@ img{
 }
 .navigate-image div img{
     border-radius: 5px;
+    cursor: pointer;
     filter: brightness(30%);
+    transition: all 200ms ease-in-out;
+}
+.navigate-image div img:hover{
+    filter: brightness(40%);
 }
