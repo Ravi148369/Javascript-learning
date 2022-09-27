@@ -3,6 +3,7 @@
     const model = document.querySelector('.model')
     const modelImage = document.querySelector('.model img')
     const modelView = document.querySelector('.model-image')
+    const navigateImage = document.querySelectorAll('.navigate-image div img')
     const images = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image2.jpg', 'image5.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image2.jpg', 'image5.jpg']
     if (!root) {
         return
@@ -30,6 +31,33 @@
             modelImage.src = e.target.src
             model.style.display = 'flex'
             animationZoomIn(.9)
+        }
+        const search=(value)=>{
+            if(e.target.src.includes(value)){
+                return value
+            }
+        }
+        let index = images.findIndex(search)
+        const j =  index
+        if(index>=1){
+            index-=1
+            navigateImage.forEach(value=>{
+                if(j == index){
+                    // filter: brightness(70%)   
+                    value.style.filter = 'brightness(100%)'
+                    value.parentElement.style.width='110px'
+                    value.style.width='100'
+                }
+                value.src = `./images/${images[index++]}`
+                value.addEventListener('click',clickModel)
+            })
+            // return
+        }
+        else{
+            navigateImage.forEach(value=>{
+                value.src = `./images/${images[index++]}`
+                value.addEventListener('click',clickModel)
+            })
         }
     }
     model.addEventListener('click',(e)=>{
