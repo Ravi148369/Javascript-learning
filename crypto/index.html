@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div>
+            <a href="#">Coins</a>
+            <a href="#">Exchange</a>
+            <a href="#">Swap</a>
+        </div>
+        <div>
+            <a href="#">
+                <img src="./images/image1.png" alt="not found">
+            </a>
+        </div>
+        <div>
+            <input type="text" placeholder="Search by name">
+            <button>Connect Wallet</button>
+        </div>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Market Cap</th>
+                <th>VWAP(24Hr)</th> 
+                <th>Supply</th>
+                <th>Volume(24Hr)</th>
+                <th>Change(24Hr)</th>
+            </thead>
+            <tbody id="js-table-body">
+
+            </tbody>
+        </table>
+        <button class="view-more-btn">View More</button>
+    </main>
+    <footer>
+        <canvas id="chart">
+
+        </canvas>
+    </footer>
+</body>
+<script src="./index.js"></script>
+</html>

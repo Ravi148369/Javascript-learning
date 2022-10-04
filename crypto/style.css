@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap');
+
+body{
+    margin: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+}
+header div img{
+    width: 100px;
+}
+header div a{
+    color: black;
+    text-decoration: none;
+    padding: 8px;
+    display: block;
+    margin-left: 12px;
+}
+header div a:hover{
+    background-color: rgba(128, 128, 128, 0.211);
+}
+header div{
+    display: flex;
+    align-items: center;
+}
+button{
+    margin-right: 12px;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 5px;
+    background-color: green;
+    color: #fff;
+}
+header div input{
+    height: 35px;
+    width: 250px;
+    margin-right: 16px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    padding-left: 8px;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(250, 250, 250);
+}
+table{
+    width: 75%;
+    padding: 8px;
+    background-color: #fff;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-top: 24px;
+}
+thead{
+    background-color: aquamarine;
+}
+thead th{
+    padding: 16px;
+    text-align: right;
+}
+tbody tr{
+    border-bottom: 1px solid rgba(128, 128, 128, 0.422);
+}
+tbody td{
+    text-align: right;
+    padding:12px 8px;
+}
+thead th:nth-child(2){
+    text-align: center;
+}
+tr td:first-child{
+    text-align: center;
+}
+tr td:nth-child(2){
+    text-align: right;
+    width: 200px;
+}
+td div{
+    display: flex;
+    align-items: center;
+}
+td img{
+    width: 30px;
+    margin-right: 8px;
+}
+.view-more-btn{
+    margin-top: 12px;
+}
+.red{
+    color: red;
+}
+.green{
+    color: green;
+}
