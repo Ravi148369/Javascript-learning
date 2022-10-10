@@ -2,14 +2,11 @@
     const crypto = {
         tbody: document.querySelector('#js-table-body'),
         viewButton: document.querySelector('.view-more-btn'),
-        main: document.querySelector('main'),
         input: document.querySelector('input'),
         loader: document.querySelector('#loader'),
         model: document.querySelector('.model'),
-        select: document.querySelector('select'),
-        request: new XMLHttpRequest(),
-        data: '',
-        count: 20,
+        data: 'ssjk',
+        limit: 10,
         getElement: function getElement(element, count = 1){
             if(count == 1){
                 return document.createElement(element)
@@ -20,75 +17,77 @@
             }
             return elements
         },
-        getData: function(count = 20){
-            this.loader.classList.add('loader')
-            this.request.open('get', 'https://api.coincap.io/v2/assets', true)
-            this.request.onload = (e)=>{
-                if(e.target.status == 200){
+        async fetchData(url){
+            let data = ''
+            await fetch(url).then(response=>{
+                if(response.status == 200){
                     try{
-                        this.data = (JSON.parse(e.target.response)).data
-                        const renderData = this.data.slice(0,count)
-                        this.tbody.innerHTML = ''
-                        this.loader.classList.remove('loader')
-                        renderData.forEach(value => {
-                            this.render(value)
-                        })
+                        data = response.json()
                     }catch(error){
-                        console.log('error' + error);
+                        console.log("given response is not JSON");
                     }
                 }
                 else{
-                    this.notFound()
+                    this.handleStatus(response)
                 }
-            }
-            this.request.onerror=function(){    
-                crypto.notFound()
-            }
-            this.request.send()
-        },
-        render: function(value){
-            const tr = this.getElement('tr')
-            const img = this.getElement('img')
-            const imgDiv = this.getElement('div')
-            const p = this.getElement('p')
-            const [rank, name, price, marketcap, vwap, supply, volume, change] = this.getElement('td', 8)
-            img.src = `https://assets.coincap.io/assets/icons/${value.symbol.toLowerCase()}@2x.png`
-            img.alt = value.id?? 'not found'
-            rank.textContent = value.rank ?? "undefined"
-            p.textContent = value.name ?? "undefined"
-            price.textContent = `${this.converter(value.priceUsd) ?? "0"}` 
-            marketcap.textContent = `${this.converter(value.marketCapUsd) ?? "0"}` 
-            vwap.textContent = `${this.converter(value.vwap24Hr) ?? "0"}`
-            supply.textContent = `${this.converter(value.supply) ?? "0"}`
-            volume.textContent = `${this.converter(value.volumeUsd24Hr) ?? "0"}`
-            change.textContent = `${parseFloat(value.changePercent24Hr).toFixed(2) ?? "0"}`
-            value.changePercent24Hr < 0?change.classList.add('red'):change.classList.add('green')
-            tr.addEventListener('click',()=>{
-                this.getChart(value.id)
             })
-            imgDiv.append(img,p)
-            name.append(imgDiv)
-            tr.append(rank, name, price, marketcap, vwap, supply, volume, change)
-            this.tbody.append(tr)
+            return data
         },
-        addListeners: function(){
+        setData:async function(){
+            this.loader.classList.add('loader')
+            this.data = await this.fetchData('https://api.coincap.io/v2/assets')
+            this.data = this.data.data
+            if(this.data == ''){
+                this.loader.classList.remove('loader')
+                return
+            }
+            Array.isArray(this.data)?this.render(this.data,this.limit):''
+            this.loader.classList.remove('loader')
+        },
+        render: function(data, limit){
+            this.tbody.innerHTML = ''
+            data.slice(0,limit).forEach(value=>{    
+                const tr = this.getElement('tr')
+                const img = this.getElement('img')
+                const imgDiv = this.getElement('div')
+                const p = this.getElement('p')
+                const [rank, name, price, marketcap, vwap, supply, volume, change] = this.getElement('td', 8)
+                img.src = `https://assets.coincap.io/assets/icons/${value.symbol.toLowerCase()}@2x.png`
+                img.alt = value.id?? 'not found'
+                rank.textContent = value.rank ?? "undefined"
+                p.textContent = value.name ?? "undefined"
+                price.textContent = `${this.converter(value.priceUsd) ?? "0"}` 
+                marketcap.textContent = `${this.converter(value.marketCapUsd) ?? "0"}` 
+                vwap.textContent = `${this.converter(value.vwap24Hr) ?? "0"}`
+                supply.textContent = `${this.converter(value.supply) ?? "0"}`
+                volume.textContent = `${this.converter(value.volumeUsd24Hr) ?? "0"}`
+                change.textContent = `${parseFloat(value.changePercent24Hr).toFixed(2) ?? "0"}`
+                value.changePercent24Hr < 0?change.classList.add('red'):change.classList.add('green')
+                tr.addEventListener('click',()=>{
+                    this.getChartData(value.id)
+                })
+                imgDiv.append(img,p)
+                name.append(imgDiv)
+                tr.append(rank, name, price, marketcap, vwap, supply, volume, change)
+                this.tbody.append(tr)
+            })
+        },
+        bind: function(){
             if(this.viewButton){
-                this.viewButton.addEventListener('click',()=>{
-                    this.count+=20
-                    this.getData(this.count)
+                this.viewButton.addEventListener('click',()=>{  
+                    this.limit+=10
+                    this.render(this.data.slice(0,this.limit))
                 })
             }
             if(this.input){
                 this.input.addEventListener('keyup',(e)=>{
                     if(this.data){
                         this.tbody.innerHTML = ''
-                        this.data.forEach(value=>{
-                            if(value.name.toLowerCase().includes(e.target.value.toLowerCase())){
-                                this.render(value)
-                            }
-                        })
+                        this.data = this.data.filter(value=>value.name.toLowerCase().includes(e.target.value.toLowerCase()))
+                        this.render(this.data,this.limit)
                         if(e.target.value == ''){
-                            this.getData(this.count)
+                            this.limit = 10
+                            this.setData()
                         }
                     }
                 })
@@ -100,19 +99,6 @@
                         this.model.style.display = 'none'
                     }
                 })
-            }
-            if(this.select){
-                this.select.addEventListener('change',()=>{
-                    this.getChart()
-                })
-            }
-        },
-        notFound: function(){
-            if(this.main){
-                this.main.innerHTML =''
-                const status = this.getElement('h2')
-                status.textContent = '404 NOT FOUND'
-                this.main.append(status)
             }
         },
         converter: function(labelValue){
@@ -126,9 +112,9 @@
                 ? formatter.format((Math.abs(Number(labelValue)) / 1.0e+6).toFixed(2))  + "M"
                 : (Math.abs(Number(labelValue)) >= 1.0e+3) 
                 ? formatter.format((Math.abs(Number(labelValue)) / 1.0e+3).toFixed(2)) + "K"
-                : Math.abs(Number(labelValue)).toFixed(2) ;
+                :formatter.format(Math.abs(Number(labelValue)).toFixed(2)) ;
         },
-        async getChart(id){
+        getChartData:async function(id){
             const canvasDiv = this.model.firstElementChild
             if(!canvasDiv){
                 return
@@ -136,21 +122,22 @@
             canvasDiv.innerHTML = ''
             const canvas = document.createElement('canvas')
             canvasDiv.append(canvas)
-            let chartData = ''
             const labels = []
             const prize = []
-            await fetch(`https://api.coincap.io/v2/assets/${id}/history?interval=d1`)
-            .then(value=>value.json()
-            .then(value=>chartData = value.data.slice(-10))
-            )
-            chartData.forEach(value=>{
-                prize.push(value.priceUsd)
-                labels.push(value.date.slice(0,10))
-            })
+            let chartData = await this.fetchData(`https://api.coincap.io/v2/assets/${id}/history?interval=d1`)
+            chartData = chartData.data
+            Array.isArray(chartData)?
+                chartData.slice(-10).forEach(value=>{
+                    prize.push(value.priceUsd)
+                    labels.push(value.date.slice(0,10))
+                }):''
+            this.setChart(id, labels,prize,canvas)
+        },
+        setChart: function(id, labels, prize, canvas){
             const data = {
                 labels: labels,
                 datasets: [{
-                    label: "Prize",
+                    label: id,
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     data: prize,
@@ -174,8 +161,11 @@
                     this.animationZoomIn(element, zoom, x)
                 }, 5);
             }
+        },
+        handleStatus: function(response){
+            console.log(response);
         }
     }
-    crypto.getData()
-    crypto.addListeners()
+    crypto.setData()
+    crypto.bind()
 })()

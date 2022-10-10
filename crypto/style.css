@@ -130,6 +130,7 @@ td img{
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(6px);
+    
 }
 .model div{
     width: 60%;
