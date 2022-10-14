@@ -1,0 +1,75 @@
+body{
+    margin: 0;
+    background-color: rgba(242, 242, 242, 0.24);
+}
+header{
+    text-align: center;
+    height: 100px;
+}
+main{
+    background-color: #fff;
+}
+main>section{
+    display: flex;
+    justify-content: center;
+    
+}
+.image-section{
+    width: 40%;
+    height: 500px;
+    position: relative;
+}
+.details-section{
+    width: 40%;
+    height: 500px;
+    border: 5px solid yellow;
+}
+.details-section div{
+    margin-top: 20px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+button{
+    margin-top: 16px;
+    color: #fff;
+    background-color: #00be4d;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 5px;
+}
+.js-on-image{
+    top: 50%;
+    left: 30%;
+    position: absolute;
+    cursor: move;
+}
+.js-on-image:hover{
+    border: 1px solid black;
+}
+input[type = 'text']{
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    outline: none;
+    display: none;
+    font-size: 1.2em;
+}
+canvas{
+    overflow: hidden;
+}
+label{
+    margin-top: 20px;
+}
+label[for = 'js-image-input']{
+    border-radius: 5px;
+    padding: 12px 16px;
+    background-color: #00be4d;
+    color: #fff;
+}
+#js-image-input{
+    display: none;
+}
