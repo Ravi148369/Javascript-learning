@@ -1,5 +1,6 @@
+import MeasureTextWidth from "./components/MeasureTextWidth.js"
+import SetFontSize from "./components/SetFontSize.js"
 (function() {
-    
     const customTshirt = {
         canvasDiv: document.querySelector('.image-section'),
         canvasContext: "",
@@ -34,27 +35,25 @@
             canvas.height = 15
             canvas.classList.add('js-on-image')
             canvas.draggable = true
-            canvas.width = this.measureTextWidth(text, '16px verdana') + 20
+            canvas.width = MeasureTextWidth(text, '16px verdana') + 20
             canvas.addEventListener('click',()=> {
                 customTshirt.canvasContext =  canvas
                 customTshirt.textCanvas = text
             })
             ctx.font = '16px verdana'
             ctx.fillText(text, 10, 13)
-            this.dragCanvas(canvas)
             canvas.addEventListener('dragstart',(e)=>{
                 this.layerX = e.layerX
                 this.layerY = e.layerY
                 this.canvasContext = canvas
             })
-            
             this.canvasDiv.append(canvas)
         },
-        inputText: function() {
-            const input = document.querySelector('#js-input-text')
-            input.style.display = 'block'   
-        },
         bind: function() {
+            const small = document.querySelector('small')
+            const fontSizeInput = document.querySelector('#js-font-size')
+            const addTextbtn = document.querySelector('#js-add-txt')
+            small.textContent = fontSizeInput.value
             this.canvasDiv.addEventListener('click',(e)=>{
                 const input = document.querySelector('#js-input-text')
                 if(input.style.display == 'block' && e.target != input){
@@ -68,40 +67,20 @@
             document.querySelector('#js-image-input').addEventListener('change',(e)=>{
                 this.addImage(URL.createObjectURL(e.target.files[0]), 100, 100, this.canvasDiv)
             })
-            const fontSizeInput = document.querySelector('input[type = range]')
-            const small = document.querySelector('small')
-            small.textContent = fontSizeInput.value
-            document.querySelector('input[type = range]').addEventListener('input',(e)=>{
+            fontSizeInput.addEventListener('input',(e)=>{
                 small.innerText = e.target.value
-                const ctx = this.canvasContext.getContext('2d')
-                ctx.clearRect(0, 0, this.canvasContext.width, this.canvasContext.height);
-                this.canvasContext.width = this.measureTextWidth(this.textCanvas, `${e.target.value}px verdana`) + 20
-                this.canvasContext.height = e.target.value
-                ctx.font = `${e.target.value}px verdana`
-                ctx.fillText(this.textCanvas, 10, e.target.value-2)
+                SetFontSize(this.textCanvas, e.target.value, this.canvasContext)
             })
             this.canvasDiv.addEventListener('dragover',(e)=> {
                 this.canvasContext.style.top = `${e.clientY - 102 - this.layerY}px`
                 this.canvasContext.style.left = `${e.clientX - 158 - this.layerX}px`
-            })           
-            const addTextbtn = document.querySelector('#js-add-txt')
-            addTextbtn.addEventListener('click',customTshirt.inputText)
-        },
-        measureTextWidth: function(text, font) {
-            const canvas = document.createElement('canvas')
-            const ctx = canvas.getContext('2d')
-            ctx.font = font
-            return ctx.measureText(text).width
-        },
-        setFontSize: function(fontSize)  {
-            const ctx = this.textCanvas
-            console.log(ctx.text);
-        },
-        dragCanvas: function() {
-            
+            })
+            addTextbtn.addEventListener('click',()=> {
+                const input = document.querySelector('#js-input-text')
+                input.style.display = 'block'
+            })
         }
     }
     customTshirt.bind()
     customTshirt.addImage('./images/tshirt.jpg',500, 500, customTshirt.canvasDiv, false)
-    
 })()
