@@ -17,6 +17,7 @@ main>section{
 .image-section{
     width: 40%;
     height: 500px;
+    border: 1px solid black;
     position: relative;
 }
 .details-section{
@@ -39,6 +40,7 @@ button{
     border: none;
     border-radius: 5px;
 }
+
 .js-on-image{
     top: 50%;
     left: 30%;
@@ -58,9 +60,6 @@ input[type = 'text']{
     display: none;
     font-size: 1.2em;
 }
-canvas{
-    overflow: hidden;
-}
 label{
     margin-top: 20px;
 }
@@ -72,4 +71,13 @@ label[for = 'js-image-input']{
 }
 #js-image-input{
     display: none;
+}
+#js-font-div,#js-image-div{
+    display: none;
+    margin-left: 0;
+    flex-direction: column;
+}
+#js-remove-btn{
+    display: none;
+    background-color: crimson;
 }

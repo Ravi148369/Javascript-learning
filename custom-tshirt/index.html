@@ -21,11 +21,20 @@
                     <label for="js-image-input">Choose or Drop File here</label>
                     <input type="file"  accept=".jpg, .jpeg, .png" name="add image" id="js-image-input">
                     <button id="js-add-txt">Add Text</button>
-                    <label>
-                        font size
-                    </label>
-                    <small>24</small>
-                    <input type="range" min="0" max="48" id="js-font-size">
+                    <div id = js-font-div>
+                        <label>font size</label>
+                        <small id="js-font-small">24</small>
+                        <input type="range" min="0" max="48" id="js-font-size">
+                    </div>
+                    <div id="js-image-div">
+                        <label for="js-image-width">Image width</label>
+                        <small id ="js-width-small">24</small>
+                        <input type="range" min="0" max="500" id="js-image-width">
+                        <label for="js-image-height">Image height</label>
+                        <small id = "js-height-small">24</small>
+                        <input type="range" min="0" max="500" id="js-image-height">
+                    </div>
+                    <button id="js-remove-btn">Remove</button>
                 </div>
             </section>
         </section>
