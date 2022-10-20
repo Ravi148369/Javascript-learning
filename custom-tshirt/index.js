@@ -80,13 +80,14 @@ import SetFontSize from "./components/SetFontSize.js"
             const addTextbtn = document.querySelector('#js-add-txt')
             const imageHeightInput = document.querySelector('#js-image-height')
             const imageWidthInput = document.querySelector('#js-image-width')
+            const image = document.querySelector('#js-image-input') 
+            const input = document.querySelector('#js-input-text')
             fontSmall.textContent = fontSizeInput.value
             imageHeightSmall.textContent = imageHeightInput.value
             imageWidthSmall.textContent = imageWidthInput.value
             let height = imageHeightInput.value
             let width = imageWidthInput.value
             this.canvasDiv.addEventListener('click', (e) => {
-                const input = document.querySelector('#js-input-text')
                 if (input.style.display == 'block' && e.target != input) {
                     if (!input.value.trim() == '') {
                         this.addText(input.value)
@@ -95,38 +96,38 @@ import SetFontSize from "./components/SetFontSize.js"
                     }
                 }
             })
-            document.querySelector('#js-image-input').addEventListener('change', (e) => {
+            image && image.addEventListener('change', (e) => {
                 this.addImage(URL.createObjectURL(e.target.files[0]), 200, 200, this.canvasDiv)
             })
-            fontSizeInput.addEventListener('input', (e) => {
+            fontSizeInput && fontSizeInput.addEventListener('input', (e) => {
                 fontSmall.innerText = e.target.value
                 if (this.canvasContext) {
                     SetFontSize(this.textCanvas, e.target.value, this.canvasContext)
                 }
             })
-            imageHeightInput.addEventListener('input', (e) => {
+            imageHeightInput && imageHeightInput.addEventListener('input', (e) => {
                 imageHeightSmall.textContent = e.target.value
                 if (this.canvasContext) {
                     height = e.target.value
                     this.setImageSize(width, height)
                 }
             })
-            imageWidthInput.addEventListener('input', (e) => {
+            imageWidthInput && imageWidthInput.addEventListener('input', (e) => {
                 imageWidthSmall.textContent = e.target.value
                 if (this.canvasContext && this.image) {
                     width = e.target.value
                     this.setImageSize(width, height)
                 }
             })
-            this.canvasDiv.addEventListener('dragover', (e) => {
+            this.canvasDiv && this.canvasDiv.addEventListener('dragover', (e) => {
                 this.canvasContext.style.top = `${e.clientY - 102 - this.layerY}px`
                 this.canvasContext.style.left = `${e.clientX - 158 - this.layerX}px`
             })
-            addTextbtn.addEventListener('click', () => {
+            addTextbtn && addTextbtn.addEventListener('click', () => {
                 const input = document.querySelector('#js-input-text')
                 input.style.display = 'block'
             })
-            this.removeButton.addEventListener('click', () => {
+            this.removeButton && this.removeButton.addEventListener('click', () => {
                 if (this.canvasContext) {
                     this.canvasContext.remove()
                     this.canvasContext = ''
